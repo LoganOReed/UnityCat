@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HexMapEditor : MonoBehaviour {
 
@@ -13,18 +14,9 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()) {
             HandleInput();
         }
-    }
-
-    public void ColorCell(Vector3 position, Color color) {
-        position = transform.InverseTransformPoint(position);
-        HexCoordinate coordinates = HexCoordinate.FromPosition(position);
-        int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
-        HexCell cell = cells[index];
-        cell.color = color;
-        hexMesh.Triangulate(cells);
     }
 
     void HandleInput() {

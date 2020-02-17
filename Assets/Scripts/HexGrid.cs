@@ -138,4 +138,14 @@ public class HexGrid : MonoBehaviour {
         label.text = cell.coordinates.ToStringSeperateLines();
 
     }
+
+    public void ColorCell(Vector3 position, Color color) {
+        position = transform.InverseTransformPoint(position);
+        HexCoordinate coordinates = HexCoordinate.FromPosition(position);
+        int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
+        HexCell cell = cells[index];
+        cell.color = color;
+        hexMesh.Triangulate(cells);
+    }
+
 }
